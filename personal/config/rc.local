@@ -1,0 +1,19 @@
+#!/bin/bash
+# This script config a private VPN asociated with this particular machine
+
+# (currently not working because no eth1 attached)
+#sudo ifconfig eth1 10.137.6.219
+
+## Adding the route for the new network (currently not working because no eth1 attached)
+## sudo route add -net 192.168.19.0 netmask 255.255.255.0 gw 10.137.6.1
+
+## Enable dnsmasq daemon
+rm -rf /etc/dnsmasq.conf
+ln -s /rw/config/dnsmasq.conf /etc/dnsmasq.conf
+systemctl --no-block start dnsmasq
+
+# Copy the old resolv.conf file
+sudo cp /etc/resolv.conf /rw/config/
+
+# Resolv locally
+sudo cp local_resolv.conf /etc/resolv.conf
